@@ -9,20 +9,20 @@ namespace Yobao
     {
         private readonly T _datastore;
 
-        public ICollection<dynamic> Configurations { get; private set; } //dynamic, the secret sauce?
+        public ICollection<DataConfiguration<T, object>> Configurations { get; private set; } //dynamic, the secret sauce?
 
         public Yobao(T datastore)
         {
             _datastore = datastore;
-            Configurations = new Collection<dynamic>();
+            Configurations = new Collection<DataConfiguration<T, object>>();
         }
 
 
-        public IEnumerable<object> GetQueryable(string typeName) 
+        public IQueryable<object> GetQueryable(string typeName) 
         {
             //we need to find the configs.. that have the matching name.. then we need to make a generic type... and return the queryable..
             //somehow..
-            var thing = Configurations.First(x => x.Name == typeName);
+            var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
 
             return thing.Query;
 
@@ -30,7 +30,7 @@ namespace Yobao
 
         public void Register<TResult>(Func<T, IQueryable<TResult>> query) where TResult : class 
         {
-            var dataConfiguration = new DataConfiguration<T, TResult>
+            var dataConfiguration = new DataConfiguration<T, object>
             {
                 Name = typeof(TResult).Name, // could swap this out for something we define
                 ElementType = typeof(TResult),
