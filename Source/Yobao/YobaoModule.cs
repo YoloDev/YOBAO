@@ -34,26 +34,10 @@
                 var formObj = Activator.CreateInstance(formType);
                 return formObj;
             };
-            Post["/{type}/create"] = _ => {
-
-                var formType = yobao.ResolveType((string)_.type);
-                var formObj = Activator.CreateInstance(formType);
-
-                this.BindTo(formObj);
-                yobao.Store((string)_.type, formObj);
-
-                return Response.AsRedirect(string.Format("/{0}/list", (string)_.type));
-            };
 
             // edit an object.
             Get["/{type}/edit/{id}"] = _ => {
                 return yobao.Load((string)_.type, (object)_.id);
-            };
-            Put["/{type}/edit/{id}"] = _ => {
-                var formObj = yobao.Load((string)_.type, (object)_.id);
-                this.BindTo(formObj);
-                yobao.Store((string)_.type, formObj);
-                return Response.AsRedirect(string.Format("/{0}/list", (string)_.type));
             };
         }
     }
