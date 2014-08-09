@@ -9,7 +9,7 @@ namespace Yobao
         {
             Get["/"] = _ =>
             {
-                return JsonConvert.SerializeObject(yobao.Configurations.ToList());
+                return JsonConvert.SerializeObject(yobao.Configurations.Select(x => x.Name).ToList());
             };
 
             Get["/{type}/list"] = _ =>
