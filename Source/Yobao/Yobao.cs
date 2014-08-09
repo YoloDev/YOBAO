@@ -1,9 +1,9 @@
-﻿namespace Yobao {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
+namespace Yobao {
 	public class Yobao<T> : IDataSource where T : class {
 		private readonly T _datastore;
 
@@ -14,6 +14,21 @@
 			Configurations = new Collection<DataConfiguration<T, object>>();
 		}
 
+		public object Load(string typeName, object id) {
+			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
+			throw new NotImplementedException();
+		}
+		public Type ResolveType(string typeName) {
+			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.InvariantCultureIgnoreCase));
+			if (thing != null) {
+				return thing.ElementType;
+			}
+			return null;
+		}
+		public void Store(string typeName, object toStore) {
+			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
+			throw new NotImplementedException();
+		}
 		public IEnumerable<NavigationItem> GetMenu() {
 			return Configurations.Select(x => new NavigationItem { Name = x.Name, Url = string.Format("/{0}/List", x.Name) });
 		}
@@ -34,6 +49,7 @@
 			};
 
 			Configurations.Add(dataConfiguration);
+
 		}
 	}
 
@@ -47,6 +63,5 @@
 
 		public T DataProvider { get; set; }
 		public IQueryable<TResult> Query { get; set; }
-
 	}
 }
