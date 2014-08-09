@@ -1,19 +1,20 @@
-﻿using System.Linq;
-using Newtonsoft.Json;
+﻿namespace Yobao {
+    using Nancy;
+    using Nancy.ModelBinding;
 
-namespace Yobao
-{
-    public class YobaoModule : Nancy.NancyModule 
-    {
+    using Newtonsoft.Json;
+    
+    using System;
+    using System.Linq;
+    
+    public class YobaoModule : NancyModule {
         public YobaoModule(IDataSource yobao) // push this up to module creation... some how..
         {
-            Get["/"] = _ =>
-            {
+            Get["/"] = _ => {
                 return JsonConvert.SerializeObject(yobao.GetMenu());
             };
 
-            Get["/{type}/list"] = _ =>
-            {
+            Get["/{type}/list"] = _ => {
                 //ick..
 
                 var queryable = yobao.GetQueryable((string)_.type); //todo can we get strongly typed params?
@@ -25,6 +26,34 @@ namespace Yobao
                 //var result = config.Query.ToList();
 
                 return JsonConvert.SerializeObject(result);
+            };
+
+            // create an object.
+            Get["/{type}/create"] = _ => {
+                var formType = yobao.ResolveType((string)_.type);
+                var formObj = Activator.CreateInstance(formType);
+                return formObj;
+            };
+            Post["/{type}/create"] = _ => {
+
+                var formType = yobao.ResolveType((string)_.type);
+                var formObj = Activator.CreateInstance(formType);
+
+                this.BindTo(formObj);
+                yobao.Store((string)_.type, formObj);
+
+                return Response.AsRedirect(string.Format("/{0}/list", (string)_.type));
+            };
+
+            // edit an object.
+            Get["/{type}/edit/{id}"] = _ => {
+                return yobao.Load((string)_.type, (object)_.id);
+            };
+            Put["/{type}/edit/{id}"] = _ => {
+                var formObj = yobao.Load((string)_.type, (object)_.id);
+                this.BindTo(formObj);
+                yobao.Store((string)_.type, formObj);
+                return Response.AsRedirect(string.Format("/{0}/list", (string)_.type));
             };
         }
     }

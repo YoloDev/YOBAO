@@ -18,6 +18,21 @@ namespace Yobao
         }
 
 
+        public object Load(string typeName, object id) {
+            var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
+            throw new NotImplementedException();
+        }
+        public Type ResolveType(string typeName) {
+            var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.InvariantCultureIgnoreCase));
+            if (thing != null) {
+                return thing.ElementType;
+            }
+            return null;
+        }
+        public void Store(string typeName, object toStore) {
+            var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
+            throw new NotImplementedException();
+        }
         public IEnumerable<NavigationItem> GetMenu() {
             return Configurations.Select(x => new NavigationItem { Name = x.Name, Url = string.Format("/{0}/List", x.Name) });
         }
@@ -26,9 +41,7 @@ namespace Yobao
             //we need to find the configs.. that have the matching name.. then we need to make a generic type... and return the queryable..
             //somehow..
             var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
-
             return thing.Query;
-
         }
 
         public void Register<TResult>(Func<T, IQueryable<TResult>> query) where TResult : class 
