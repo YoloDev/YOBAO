@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Yobao
@@ -8,23 +9,25 @@ namespace Yobao
     public class Yobao
     {
 
-        public ICollection<DataConfig> Configurations { get; private set; } //todo: fix visibility
+        public ICollection<DataConfiguration<SampleDatabase, Car>> Configurations { get; private set; } //todo: fix visibility
 
         public Yobao()
         {
-            Configurations = new Collection<DataConfig>();
+            Configurations = new Collection<DataConfiguration<SampleDatabase, Car>>();
         }
 
-        public void Register<T, TResult>(Func<T, IQueryable<TResult>> query) where TResult : class
+        public void Register<T, TResult>(Func<SampleDatabase, IQueryable<Car>> query) where T : class where TResult : class
         {
-            //how do we register the query?
 
-            var dataConfiguration = new DataConfiguration<T, TResult>
+            var database = new SampleDatabase(); //TODO: remove this from here.
+
+            var dataConfiguration = new DataConfiguration<SampleDatabase, Car>
             {
                 Name = typeof(TResult).Name, // could swap this out for something we define
                 ElementType = typeof(TResult),
                 DataProviderType = typeof(T),
-                Query = query
+                Query = query.Invoke(database)
+                //Query = query //how do we then use this?
             };
 
             Configurations.Add(dataConfiguration);
@@ -44,15 +47,29 @@ namespace Yobao
         //abstract public object Query { get; set; }
     }
 
-    public class DataConfiguration<T, TResult> : DataConfig, IQueryMe<T, TResult>
+    public class DataConfiguration<T, TResult> : DataConfig
     {
-        public Func<T, IQueryable<TResult>> Query { get; set; }
+        public Func<SampleDatabase, IQueryable<Car>> Test { get; set; }
+        public IQueryable<Car> Query { get; set; }
 
     }
 
-    public interface IQueryMe<T, TResult>
+    public static class TConverter
     {
-        Func<T, IQueryable<TResult>> Query { get; set; }
+        public static T ChangeType<T>(object value)
+        {
+            return (T)ChangeType(typeof(T), value);
+        }
+        public static object ChangeType(Type t, object value)
+        {
+            TypeConverter tc = TypeDescriptor.GetConverter(t);
+            return tc.ConvertFrom(value);
+        }
+        public static void RegisterTypeConverter<T, TC>() where TC : TypeConverter
+        {
+
+            TypeDescriptor.AddAttributes(typeof(T), new TypeConverterAttribute(typeof(TC)));
+        }
     }
 
 }

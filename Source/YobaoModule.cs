@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Linq;
+﻿using System.Linq;
 using Newtonsoft.Json;
 
 namespace Yobao
@@ -19,10 +17,12 @@ namespace Yobao
                 //ick..
                 var config = yobao.Configurations.Single(x => x.Name == _.type);
 
-                
-                
+                //now with the config for this "type", how can we build an IQueryable to access it?
+                //we know we have the type that the query is from, and we have the func to run it..
 
-                return JsonConvert.SerializeObject(config);
+                var result = config.Query.ToList();
+
+                return JsonConvert.SerializeObject(result);
             };
         }
     }
