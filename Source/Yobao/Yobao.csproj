@@ -87,6 +87,12 @@
     <Compile Include="YobaoModule.cs" />
     <Compile Include="YobaoNancyBootstrapper.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Yobao.Core\Yobao.Core.csproj">
+      <Project>{3dc0c255-bd20-4ab8-bdbb-30c519a8a2b9}</Project>
+      <Name>Yobao.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
