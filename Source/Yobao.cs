@@ -1,33 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Yobao
 {
-    public class Yobao
+    public class Yobao<T> where T: class 
     {
+        private readonly T _datastore;
 
-        public ICollection<DataConfiguration<SampleDatabase, Car>> Configurations { get; private set; } //todo: fix visibility
+        public ICollection<dynamic> Configurations { get; private set; } //dynamic, the secret sauce?
 
-        public Yobao()
+        public Yobao(T datastore)
         {
-            Configurations = new Collection<DataConfiguration<SampleDatabase, Car>>();
+            _datastore = datastore;
+            Configurations = new Collection<dynamic>();
         }
 
-        public void Register<T, TResult>(Func<SampleDatabase, IQueryable<Car>> query) where T : class where TResult : class
+
+        public IEnumerable<object> GetQueryable(string typeName) 
         {
+            //we need to find the configs.. that have the matching name.. then we need to make a generic type... and return the queryable..
+            //somehow..
+            var thing = Configurations.First(x => x.Name == typeName);
 
-            var database = new SampleDatabase(); //TODO: remove this from here.
+            return thing.Query;
 
-            var dataConfiguration = new DataConfiguration<SampleDatabase, Car>
+        }
+
+        public void Register<TResult>(Func<T, IQueryable<TResult>> query) where TResult : class 
+        {
+            var dataConfiguration = new DataConfiguration<T, TResult>
             {
                 Name = typeof(TResult).Name, // could swap this out for something we define
                 ElementType = typeof(TResult),
                 DataProviderType = typeof(T),
-                Query = query.Invoke(database)
-                //Query = query //how do we then use this?
+                DataProvider = _datastore,
+                Query = query.Invoke(_datastore)
             };
 
             Configurations.Add(dataConfiguration);
@@ -35,7 +44,7 @@ namespace Yobao
         }
     }
 
-    public abstract class DataConfig
+    public class DataConfiguration<T, TResult>  where TResult: class 
     {
         public string Name { get; set; }
 
@@ -44,32 +53,9 @@ namespace Yobao
         public Type ElementType { get; set; }
         public Type DataProviderType { get; set; }
 
-        //abstract public object Query { get; set; }
-    }
+        public T DataProvider { get; set; }
+        public IQueryable<TResult> Query { get; set; }
 
-    public class DataConfiguration<T, TResult> : DataConfig
-    {
-        public Func<SampleDatabase, IQueryable<Car>> Test { get; set; }
-        public IQueryable<Car> Query { get; set; }
-
-    }
-
-    public static class TConverter
-    {
-        public static T ChangeType<T>(object value)
-        {
-            return (T)ChangeType(typeof(T), value);
-        }
-        public static object ChangeType(Type t, object value)
-        {
-            TypeConverter tc = TypeDescriptor.GetConverter(t);
-            return tc.ConvertFrom(value);
-        }
-        public static void RegisterTypeConverter<T, TC>() where TC : TypeConverter
-        {
-
-            TypeDescriptor.AddAttributes(typeof(T), new TypeConverterAttribute(typeof(TC)));
-        }
     }
 
 }
