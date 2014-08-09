@@ -5,11 +5,11 @@ namespace Yobao
 {
     public class YobaoModule : Nancy.NancyModule 
     {
-        public YobaoModule(Yobao<SampleDatabase> yobao) // push this up to module creation... some how..
+        public YobaoModule(IDataSource yobao) // push this up to module creation... some how..
         {
             Get["/"] = _ =>
             {
-                return JsonConvert.SerializeObject(yobao.Configurations.ToList());
+                return JsonConvert.SerializeObject(yobao.GetMenu());
             };
 
             Get["/{type}/list"] = _ =>

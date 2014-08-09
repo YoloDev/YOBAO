@@ -18,9 +18,7 @@ namespace Yobao
             yobao.Register(x => x.Cars);
 
             //add to the nancy ioc container
-            container.Register(yobao);
+            container.Register((IDataSource)yobao);
         }
-
-        
     }
 }

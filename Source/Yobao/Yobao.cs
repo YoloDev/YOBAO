@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Yobao
 {
-    public class Yobao<T> where T: class 
+    public class Yobao<T> : IDataSource where T: class 
     {
         private readonly T _datastore;
 
@@ -18,6 +18,9 @@ namespace Yobao
         }
 
 
+        public IEnumerable<NavigationItem> GetMenu() {
+            return Configurations.Select(x => new NavigationItem { Name = x.Name, Url = string.Format("/{0}/List", x.Name) });
+        }
         public IQueryable<object> GetQueryable(string typeName) 
         {
             //we need to find the configs.. that have the matching name.. then we need to make a generic type... and return the queryable..
