@@ -7,7 +7,6 @@
         IEnumerable<NavigationItem> GetMenu();
         IQueryable<object> GetQueryable(string typeName);
         Type ResolveType(string typeName);
-        void Store(string typeName, object toStore);
         object Load(string typeName, object id);
     }
 }

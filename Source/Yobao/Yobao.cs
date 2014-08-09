@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
 namespace Yobao {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
 	public class Yobao<T> : IDataSource where T : class {
 		private readonly T _datastore;
 
@@ -13,6 +12,7 @@ namespace Yobao {
 			_datastore = datastore;
 			Configurations = new Collection<DataConfiguration<T, object>>();
 		}
+
 
 		public object Load(string typeName, object id) {
 			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
@@ -24,10 +24,6 @@ namespace Yobao {
 				return thing.ElementType;
 			}
 			return null;
-		}
-		public void Store(string typeName, object toStore) {
-			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
-			throw new NotImplementedException();
 		}
 		public IEnumerable<NavigationItem> GetMenu() {
 			return Configurations.Select(x => new NavigationItem { Name = x.Name, Url = string.Format("/{0}/List", x.Name) });
@@ -49,7 +45,6 @@ namespace Yobao {
 			};
 
 			Configurations.Add(dataConfiguration);
-
 		}
 	}
 
@@ -63,5 +58,7 @@ namespace Yobao {
 
 		public T DataProvider { get; set; }
 		public IQueryable<TResult> Query { get; set; }
+
 	}
+
 }
