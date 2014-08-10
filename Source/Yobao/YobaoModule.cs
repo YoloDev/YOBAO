@@ -1,15 +1,15 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
+using Nancy;
 
 namespace Yobao
 {
     public class YobaoModule : Nancy.NancyModule 
     {
-        public YobaoModule(Yobao<SampleDatabase> yobao) // push this up to module creation... some how..
+        public YobaoModule(IYobao<SampleDatabase> yobao) 
         {
             Get["/"] = _ =>
             {
-                return JsonConvert.SerializeObject(yobao.Configurations.ToList());
+                return Response.AsJson(yobao.Configurations.ToList());
             };
 
             Get["/{type}/list"] = _ =>
@@ -23,8 +23,7 @@ namespace Yobao
                 //we know we have the type that the query is from, and we have the func to run it..
 
                 //var result = config.Query.ToList();
-
-                return JsonConvert.SerializeObject(result);
+                return Response.AsJson(result);
             };
         }
     }
