@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Yobao
 {
-    public class Yobao<T> where T: class 
+    public class Yobao<T> : Yobao.IYobao<T> where T: class 
     {
         private readonly T _datastore;
 
