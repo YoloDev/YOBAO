@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Yobao
 {
-    interface IYobao<T>
+    public interface IYobao<T>
      where T : class
     {
         ICollection<DataConfiguration<T, object>> Configurations { get; }
