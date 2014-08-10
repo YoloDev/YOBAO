@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Yobao
 {
-    public class SampleDatabase
+    public class SampleDatabase : ISampleDatabase
     {
         public IQueryable<Car> Cars
         {
