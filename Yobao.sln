@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yobao", "Source\Yobao\Yobao.csproj", "{005ACE68-DD11-4F28-82B8-A31C1163EA7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yobao.Testing", "Yobao.Testing\Yobao.Testing.csproj", "{6CE0643A-D259-4606-8CC3-3498FAAF5E3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{005ACE68-DD11-4F28-82B8-A31C1163EA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{005ACE68-DD11-4F28-82B8-A31C1163EA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{005ACE68-DD11-4F28-82B8-A31C1163EA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE0643A-D259-4606-8CC3-3498FAAF5E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE0643A-D259-4606-8CC3-3498FAAF5E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE0643A-D259-4606-8CC3-3498FAAF5E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE0643A-D259-4606-8CC3-3498FAAF5E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
