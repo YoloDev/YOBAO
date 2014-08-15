@@ -60,5 +60,4 @@ namespace Yobao {
 		public IQueryable<TResult> Query { get; set; }
 
 	}
-
 }

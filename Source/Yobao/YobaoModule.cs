@@ -17,10 +17,19 @@
             Get["/{type}/list"] = _ => {
 				var queryable = yobao.GetQueryable((string)_.type); //todo can we get strongly typed params?
 				var result = queryable.ToList();
-				//now with the config for this "type", how can we build an IQueryable to access it?
-				//we know we have the type that the query is from, and we have the func to run it..
-
 				return Response.AsJson(result);
+            };
+
+            // create an object.
+            Get["/{type}/create"] = _ => {
+                var formType = yobao.ResolveType((string)_.type);
+                var formObj = Activator.CreateInstance(formType);
+                return formObj;
+            };
+
+            // edit an object.
+            Get["/{type}/edit/{id}"] = _ => {
+                return yobao.Load((string)_.type, (object)_.id);
             };
 
             // create an object.
