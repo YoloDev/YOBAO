@@ -13,7 +13,6 @@ namespace Yobao {
 			Configurations = new Collection<DataConfiguration<T, object>>();
 		}
 
-
 		public object Load(string typeName, object id) {
 			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
 			throw new NotImplementedException();

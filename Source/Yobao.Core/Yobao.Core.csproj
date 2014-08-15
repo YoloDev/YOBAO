@@ -47,6 +47,7 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="IDataPersistence.cs" />
     <Compile Include="IDataSource.cs" />
+    <Compile Include="ModelRegistrar.cs" />
     <Compile Include="NavigationItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
