@@ -4,7 +4,9 @@
 	public class YobaoNancyBootstrapper : DefaultNancyBootstrapper {
 		IDataSource _DataSource;
 		public YobaoNancyBootstrapper() : base() {
-			_DataSource = new Yobao<SampleDatabase>(new SampleDatabase());
+			var yobao = new Yobao<SampleDatabase>(new SampleDatabase());
+			yobao.Register(x => x.Cars);
+			_DataSource = (IDataSource)yobao;
 		}
 
 		//placeholder for application container setup (if needed, when needed)
