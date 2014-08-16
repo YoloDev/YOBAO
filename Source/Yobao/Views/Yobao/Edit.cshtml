@@ -2,6 +2,11 @@
 @{
 	Layout = null;
 	var properties = Model.GetType().GetProperties();
+	string keyName = string.Empty;
+	var keyProp = Model.GetType().GetProperties().FirstOrDefault(x => x.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any());
+	if (keyProp != null) { keyName = keyProp.Name; }
+	var keyValue = string.Empty;
+	if (keyProp != null) { keyValue = Model.GetType().GetProperty(keyName).GetValue(Model).ToString(); }
 }
 
 <!DOCTYPE html>
@@ -12,7 +17,8 @@
 	<title></title>
 </head>
 <body>
-	<form>
+	@this.Path
+	<form action="@keyValue" method="put">
 		@foreach (var prop in properties) {
 			if (prop.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any()) {
 				<input type="hidden" name="@prop.Name" value="@prop.GetValue(Model)" />
@@ -23,10 +29,7 @@
 				</div>
 			}
 		}
-		<div><button type="submit">Save</button></div>
+		<div><input type="submit" value="Save" /></div>
 	</form>
-
-
-
 </body>
 </html>
