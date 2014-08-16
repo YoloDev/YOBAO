@@ -8,16 +8,18 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+	<meta name="viewport" content="width=device-width" />
+	<title></title>
 </head>
 <body>
 	<form action="Create" method="post">
 		@foreach (var prop in properties) {
-			<div class="form-group">
-				<label>@prop.Name</label>
-				<input name="@prop.Name" value="@prop.GetValue(Model)" />
-			</div>
+			if (!prop.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any()) {
+				<div class="form-group">
+					<label>@prop.Name</label>
+					<input name="@prop.Name" value="@prop.GetValue(Model)" />
+				</div>
+			}
 		}
 		<div><input type="submit" value="Save" /></div>
 	</form>
