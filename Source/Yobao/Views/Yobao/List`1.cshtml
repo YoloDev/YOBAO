@@ -1,6 +1,11 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<IEnumerable<object>>
 @{
 	var firstItem = Model.FirstOrDefault();
+	string keyName = string.Empty;
+	if (firstItem != null){
+		var keyProp = firstItem.GetType().GetProperties().FirstOrDefault(x=>x.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any());
+		if (keyProp != null){ keyName = keyProp.Name; }
+	}
 }
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,16 +22,29 @@
 					@foreach (var prop in firstItem.GetType().GetProperties()) {
 						<th>@prop.Name</th>
 					}
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				@foreach (var item in Model) {
+					var props = item.GetType().GetProperties();
 					<tr>
-						@foreach (var prop in item.GetType().GetProperties()) {
+						@foreach (var prop in props) {
 							<td>
 								<span>@prop.GetValue(item)</span>
 							</td>
 						}
+						<td>
+							@if (!string.IsNullOrWhiteSpace(keyName)) {
+								<a href="Edit/@item.GetType().GetProperty(keyName).GetValue(item).ToString()">Edit</a>
+							}
+						</td>
+						<td>
+							@if (!string.IsNullOrWhiteSpace(keyName)) {
+								<a href="Delete/@item.GetType().GetProperty(keyName).GetValue(item).ToString()">Delete</a>
+							}
+						</td>
 					</tr>
 				}
 			</tbody>

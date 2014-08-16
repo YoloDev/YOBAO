@@ -88,6 +88,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\Yobao\Create.cshtml" />
     <None Include="Views\Yobao\Dashboard.cshtml" />
+    <Content Include="Views\Yobao\Edit.cshtml" />
     <None Include="Views\Yobao\List`1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
