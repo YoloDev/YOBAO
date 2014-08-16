@@ -8,7 +8,7 @@
 		public YobaoModule(IDataSource yobao) // push this up to module creation... some how..
 		{
 			Get["/"] = _ => {
-				return yobao.GetMenu();
+				return View["Dashboard", yobao.GetMenu()];
 			};
 
 			Get["/{type}/list"] = _ => {

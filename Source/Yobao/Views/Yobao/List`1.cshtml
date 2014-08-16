@@ -1,0 +1,37 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<IEnumerable<object>>
+@{
+	var firstItem = Model.FirstOrDefault();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+</head>
+<body>
+	@if (firstItem == null) {
+		<h2>No items exist.</h2>
+	} else {
+		<table>
+			<thead>
+				<tr>
+					@foreach (var prop in firstItem.GetType().GetProperties()) {
+						<th>@prop.Name</th>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model) {
+					<tr>
+						@foreach (var prop in item.GetType().GetProperties()) {
+							<td>
+								<span>@prop.GetValue(item)</span>
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</body>
+
+</html>

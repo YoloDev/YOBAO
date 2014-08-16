@@ -1,0 +1,17 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<IEnumerable<Yobao.NavigationItem>>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title></title>
+</head>
+<body>
+	<div>
+		<ul>
+			@foreach (var nav in Model) {
+				<li><a href="@nav.Url">@nav.Name</a></li>
+			}
+		</ul>
+	</div>
+</body>
+</html>
