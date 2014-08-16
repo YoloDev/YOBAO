@@ -5,23 +5,18 @@
 	using Yobao.Models;
 	using Yobao.Repositories;
 	using Yobao.Repositories.Fakes;
-	public class SampleDatabase : IDataPersistence {
+	public class MyModelRegistrar : ModelRegistrar {
 		IRepository<Car> _CarRepository;
 		IRepository<Boat> _BoatRepository;
-
-		public SampleDatabase(FakeCarRepository carRepository, FakeBoatRepository boatRepository) {
+		public MyModelRegistrar(FakeCarRepository carRepository, FakeBoatRepository boatRepository)
+			: base() {
 			_CarRepository = carRepository;
 			_BoatRepository = boatRepository;
-		}
 
-		public IRepository<Car> Cars {
-			get { return _CarRepository; }
+			Register<Car>(() => _CarRepository.All(), (object id) => _CarRepository.Get(id));
+			Register<Boat>(() => _BoatRepository.All(), (object id) => _BoatRepository.Get(id));
 		}
-		public IRepository<Boat> Boats {
-			get { return _BoatRepository; }
-		}
-
-		public object Persist(object item) {
+		public override object Persist(object item) {
 			Type itemType = item.GetType();
 			Type typeToFind = typeof(IRepository<>).MakeGenericType(itemType);
 

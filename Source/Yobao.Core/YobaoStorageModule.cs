@@ -15,7 +15,7 @@
 				}
 
 				Bind(formObj);
-
+				
 				dataPersistence.Persist(formObj);
 				return Response.AsRedirect(string.Format("/{0}/list", (string)_.type));
 			};

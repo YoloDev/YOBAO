@@ -1,22 +1,21 @@
 ﻿namespace Yobao {
 	using Nancy;
 	using Nancy.TinyIoc;
+	using Yobao.Models;
+	using Yobao.Repositories;
+	using Yobao.Repositories.Fakes;
 	public class YobaoNancyBootstrapper : DefaultNancyBootstrapper {
-		IDataSource _DataSource;
-
 		//placeholder for application container setup (if needed, when needed)
 		protected override void ConfigureApplicationContainer(TinyIoCContainer container) {
 			base.ConfigureApplicationContainer(container);
 
-			container.Register<Repositories.Fakes.FakeBoatRepository>().AsSingleton();
-			container.Register<Repositories.Fakes.FakeCarRepository>().AsSingleton();
+			container.Register<IRepository<Boat>, FakeBoatRepository>().AsSingleton();
+			container.Register<IRepository<Car>, FakeCarRepository>().AsSingleton();
 
-			var db = container.Resolve<SampleDatabase>();
-			var yobao = new Yobao<SampleDatabase>(db);
-			yobao.Register(x => x.Cars.All(), (object id) => db.Cars.Get(id));
-			yobao.Register(x => x.Boats.All(), (object id) => db.Boats.Get(id));
-			_DataSource = (IDataSource)yobao;
-			container.Register<IDataSource>(_DataSource);
+			var modelRegistrar = container.Resolve<MyModelRegistrar>();
+
+			container.Register<IDataSource, MyModelRegistrar>(modelRegistrar);
+			container.Register<IDataPersistence, MyModelRegistrar>(modelRegistrar);
 		}
 
 		//placeholder for request specific container setup (if needed, when needed)
