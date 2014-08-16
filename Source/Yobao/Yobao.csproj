@@ -103,10 +103,14 @@
   <ItemGroup>
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="MyModelRegistrar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Fakes\FakeBoatRepository.cs" />
     <Compile Include="Repositories\Fakes\FakeCarRepository.cs" />
+    <Compile Include="Repositories\Fakes\FakeCategoryRepository.cs" />
+    <Compile Include="Repositories\Fakes\FakeItemRepository.cs" />
     <Compile Include="Repositories\Fakes\FakeRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="YobaoNancyBootstrapper.cs" />

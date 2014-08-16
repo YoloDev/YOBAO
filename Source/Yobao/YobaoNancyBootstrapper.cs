@@ -11,6 +11,8 @@
 
 			container.Register<IRepository<Boat>, FakeBoatRepository>().AsSingleton();
 			container.Register<IRepository<Car>, FakeCarRepository>().AsSingleton();
+			container.Register<IRepository<Category>, FakeCategoryRepository>().AsSingleton();
+			container.Register<IRepository<Item>, FakeItemRepository>().AsSingleton();
 
 			var modelRegistrar = container.Resolve<MyModelRegistrar>();
 

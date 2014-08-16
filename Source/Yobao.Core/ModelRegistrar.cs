@@ -26,13 +26,15 @@
 			return Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.InvariantCultureIgnoreCase)).Load(id);
 		}
 
-		protected void Register<T>(Func<IQueryable> getAll, Func<object, object> getObject) {
-			Configurations.Add(new DataConfiguration {
+		protected DataConfiguration Register<T>(Func<IQueryable> getAll, Func<object, object> getObject) {
+			var config = new DataConfiguration {
 				Name = typeof(T).Name,
 				ElementType = typeof(T),
 				Load = getObject,
 				Query = getAll
-			});
+			};
+			Configurations.Add(config);
+			return config;
 		}
 
 		public abstract object Persist(object item);
