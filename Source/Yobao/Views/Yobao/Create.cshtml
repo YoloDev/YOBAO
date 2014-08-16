@@ -1,0 +1,32 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<object>
+@{
+	Layout = null;
+	var properties = Model.GetType().GetProperties();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+	<form>
+		@foreach (var prop in properties) {
+			if (prop.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any()) {
+				<input type="hidden" name="@prop.Name" value="@prop.GetValue(Model)" />
+			} else {
+				<div class="form-group">
+					<label>@prop.Name</label>
+					<input name="@prop.Name" value="@prop.GetValue(Model)" />
+				</div>
+			}
+		}
+		<div><button type="submit"></button></div>
+	</form>
+
+
+
+</body>
+</html>

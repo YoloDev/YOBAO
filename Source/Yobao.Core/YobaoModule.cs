@@ -21,24 +21,15 @@
 			Get["/{type}/create"] = _ => {
 				var formType = yobao.ResolveType((string)_.type);
 				var formObj = Activator.CreateInstance(formType);
-				return formObj;
+				return View["Create", formObj];
 			};
 
 			// edit an object.
 			Get["/{type}/edit/{id}"] = _ => {
-				return yobao.Load((string)_.type, (object)_.id);
-			};
-
-			// create an object.
-			Get["/{type}/create"] = _ => {
 				var formType = yobao.ResolveType((string)_.type);
 				var formObj = Activator.CreateInstance(formType);
-				return formObj;
-			};
-
-			// edit an object.
-			Get["/{type}/edit/{id}"] = _ => {
-				return yobao.Load((string)_.type, (object)_.id);
+				return View["Edit", formObj];
+				//return yobao.Load((string)_.type, (object)_.id);
 			};
 		}
 	}

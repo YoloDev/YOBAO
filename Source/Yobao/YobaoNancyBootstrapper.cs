@@ -6,6 +6,7 @@
 		public YobaoNancyBootstrapper() : base() {
 			var yobao = new Yobao<SampleDatabase>(new SampleDatabase());
 			yobao.Register(x => x.Cars);
+			yobao.Register(x => x.Boats);
 			_DataSource = (IDataSource)yobao;
 		}
 

@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Views\Yobao\Create.cshtml" />
     <None Include="Views\Yobao\Dashboard.cshtml" />
     <None Include="Views\Yobao\List`1.cshtml" />
     <None Include="Web.Debug.config">
