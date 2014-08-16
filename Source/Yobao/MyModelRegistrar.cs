@@ -2,9 +2,11 @@
 	using System;
 	using System.Linq;
 	using System.Reflection;
+
 	using Yobao.Models;
 	using Yobao.Repositories;
 	using Yobao.Repositories.Fakes;
+	
 	public class MyModelRegistrar : ModelRegistrar {
 		IRepository<Car> _CarRepository;
 		IRepository<Boat> _BoatRepository;
@@ -16,7 +18,10 @@
 			Register<Car>(() => _CarRepository.All(), (object id) => _CarRepository.Get(id));
 			Register<Boat>(() => _BoatRepository.All(), (object id) => _BoatRepository.Get(id));
 		}
+
 		public override object Persist(object item) {
+			// Not sure if this would be here.
+			// if we would be using NHibernate, I would have this call ISession.SaveOrUpdate(item);
 			Type itemType = item.GetType();
 			Type typeToFind = typeof(IRepository<>).MakeGenericType(itemType);
 
