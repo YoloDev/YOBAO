@@ -26,10 +26,8 @@
 
 			// edit an object.
 			Get["/{type}/edit/{id}"] = _ => {
-				//var formType = yobao.ResolveType((string)_.type);
-				//var formObj = Activator.CreateInstance(formType);
-				//return View["Edit", formObj];
-				return yobao.Load((string)_.type, (object)_.id);
+				var model = yobao.Load((string)_.type, (object)_.id);
+				return View["Edit", model]; 
 			};
 		}
 	}

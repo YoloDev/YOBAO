@@ -1,4 +1,5 @@
 ﻿namespace Yobao.Repositories.Fakes {
+	using System;
 	using System.Linq;
 	using Yobao.Models;
 	public class FakeBoatRepository : FakeRepository<Boat>, IRepository<Boat> {
@@ -9,7 +10,7 @@
 			SaveOrUpdate(new Boat { Make = "Action Craft", Model = "FlatsPro", Price = 999 });
 		}
 		public override Boat Get(object id) {
-			return _Items.FirstOrDefault(x => x.Id.Equals(id));
+			return _Items.FirstOrDefault(x => x.Id.Equals(Convert.ToInt32(id)));
 		}
 		protected override Boat FindByKey(Boat item) {
 			return _Items.FirstOrDefault(x => x.Id == item.Id);

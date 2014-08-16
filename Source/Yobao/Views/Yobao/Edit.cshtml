@@ -18,7 +18,7 @@
 </head>
 <body>
 	@this.Path
-	<form action="@keyValue" method="put">
+	<form action="@keyValue" method="post">
 		@foreach (var prop in properties) {
 			if (prop.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true).Any()) {
 				<input type="hidden" name="@prop.Name" value="@prop.GetValue(Model)" />
