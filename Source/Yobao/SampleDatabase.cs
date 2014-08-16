@@ -14,11 +14,11 @@
 			_BoatRepository = boatRepository;
 		}
 
-		public IQueryable<Car> Cars {
-			get { return _CarRepository.All(); }
+		public IRepository<Car> Cars {
+			get { return _CarRepository; }
 		}
-		public IQueryable<Boat> Boats {
-			get { return _BoatRepository.All(); }
+		public IRepository<Boat> Boats {
+			get { return _BoatRepository; }
 		}
 
 		public object Persist(object item) {

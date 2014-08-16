@@ -8,6 +8,9 @@
 			SaveOrUpdate(new Boat { Make = "Action Craft", Model = "Flyfisher", Price = 999 });
 			SaveOrUpdate(new Boat { Make = "Action Craft", Model = "FlatsPro", Price = 999 });
 		}
+		public override Boat Get(object id) {
+			return _Items.FirstOrDefault(x => x.Id.Equals(id));
+		}
 		protected override Boat FindByKey(Boat item) {
 			return _Items.FirstOrDefault(x => x.Id == item.Id);
 		}

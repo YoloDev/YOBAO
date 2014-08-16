@@ -9,7 +9,7 @@
 		public IQueryable<T> All() {
 			return new EnumerableQuery<T>(_Items);
 		}
-
+		public abstract T Get(object id);
 		protected abstract void SetKey(T item);
 		protected abstract T FindByKey(T item);
 

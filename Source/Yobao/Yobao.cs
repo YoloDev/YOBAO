@@ -15,7 +15,7 @@ namespace Yobao {
 
 		public object Load(string typeName, object id) {
 			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.OrdinalIgnoreCase));
-			throw new NotImplementedException();
+			return thing.Load(id);
 		}
 		public Type ResolveType(string typeName) {
 			var thing = Configurations.First(x => string.Equals(x.Name, typeName, StringComparison.InvariantCultureIgnoreCase));
@@ -34,12 +34,13 @@ namespace Yobao {
 			return thing.Query;
 		}
 
-		public void Register<TResult>(Func<T, IQueryable<TResult>> query) where TResult : class {
+		public void Register<TResult>(Func<T, IQueryable<TResult>> query, Func<object, TResult> loadFunc) where TResult : class {
 			var dataConfiguration = new DataConfiguration<T, object> {
 				Name = typeof(TResult).Name, // could swap this out for something we define
 				ElementType = typeof(TResult),
 				DataProviderType = typeof(T),
 				DataProvider = _datastore,
+				Load = loadFunc,
 				Query = query.Invoke(_datastore)
 			};
 

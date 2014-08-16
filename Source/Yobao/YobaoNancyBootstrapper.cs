@@ -13,8 +13,8 @@
 
 			var db = container.Resolve<SampleDatabase>();
 			var yobao = new Yobao<SampleDatabase>(db);
-			yobao.Register(x => x.Cars);
-			yobao.Register(x => x.Boats);
+			yobao.Register(x => x.Cars.All(), (object id) => db.Cars.Get(id));
+			yobao.Register(x => x.Boats.All(), (object id) => db.Boats.Get(id));
 			_DataSource = (IDataSource)yobao;
 			container.Register<IDataSource>(_DataSource);
 		}

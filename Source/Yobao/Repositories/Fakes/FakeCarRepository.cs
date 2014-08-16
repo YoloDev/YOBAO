@@ -7,6 +7,9 @@
 			SaveOrUpdate(new Car { Name = "Corolla" });
 			SaveOrUpdate(new Car { Name = "Tarago" });
 		}
+		public override Car Get(object id) {
+			return _Items.FirstOrDefault(x => x.Id.Equals(id));
+		}
 		protected override Car FindByKey(Car item) {
 			return _Items.FirstOrDefault(x => x.Id == item.Id);
 		}
