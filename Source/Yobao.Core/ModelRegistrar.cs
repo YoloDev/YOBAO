@@ -3,7 +3,7 @@
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Linq;
-	public abstract class ModelRegistrar : IDataSource, IDataPersistence {
+	public abstract class ModelRegistrar : IModelRegistrar, IDataSource, IDataPersistence {
 		protected ICollection<DataConfiguration> Configurations { get; private set; }
 
 		public ModelRegistrar() {
